@@ -8,27 +8,23 @@ addons:
 git:
   depth: 150
 
-jobs:
-  include:
-    - stage: "Building..."
-      script: luarocks install --local luacheck
-      name: "Installing Luacheck"
-    - script: /home/travis/.luarocks/bin/luacheck . --no-color -q
-      name: "Run Luacheck"
-    - if: |
-        branch = master AND \
-        NOT type = pull_request
-      script: ./wowace_translations.sh
-      name: "Push Localizations"
-    - script: ./generate_changelog.sh
-      name: "Generate Changelog"
-    - script: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
-      name: "Update Build Date"
-    - script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
-      name: "Deploy"
+install: luarocks install --local luacheck
+
+script: /home/travis/.luarocks/bin/luacheck . --no-color -q
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then ./wowace_translations.sh; fi
+  - |
+    ./generate_changelog.sh
+    sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
 
 after_failure:
   - curl -s https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh | bash -s -- failure $WEBHOOK_URL
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
 notifications:
   email:
