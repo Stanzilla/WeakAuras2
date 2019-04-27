@@ -17,7 +17,7 @@ jobs:
     - stage: "Push Localizations"
       if: |
         branch = master AND \
-        type NOT pull_request
+        type NOT IN (pull_request)
       script: ./wowace_translations.sh
     - stage: "Generate Changelog"
       script: ./generate_changelog.sh
