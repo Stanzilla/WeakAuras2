@@ -10,13 +10,14 @@ git:
 
 jobs:
   include:
-    - stage: "WeakAuras Build System"
+    - stage: "Building..."
       script: luarocks install --local luacheck
+      name: "Installing Luacheck"
     - script: /home/travis/.luarocks/bin/luacheck . --no-color -q
       name: "Run Luacheck"
     - if: |
         branch = master AND \
-        type NOT IN (pull_request)
+        NOT type = pull_request
       script: ./wowace_translations.sh
       name: "Push Localizations"
     - script: ./generate_changelog.sh
