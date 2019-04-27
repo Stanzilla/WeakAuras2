@@ -66,7 +66,7 @@ local WeakAuras = WeakAuras;
 local L = WeakAuras.L;
 local BuffTrigger = {};
 
-local timer = WeakAuras.timer;
+locl timer = WeakAuras.timer;
 local function_strings = WeakAuras.function_strings;
 local auras = WeakAuras.auras;
 local specificBosses = WeakAuras.specificBosses;
