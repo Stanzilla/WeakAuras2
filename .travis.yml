@@ -3,27 +3,28 @@ language: minimal
 addons:
   apt:
     packages:
-    - luarocks
+      - luarocks
 
 git:
   depth: 150
 
 jobs:
   include:
-    - stage: "Install and run Luacheck"
-    script: luarocks install --local luacheck
-    script: /home/travis/.luarocks/bin/luacheck . --no-color -q
+    - stage: "Install Luacheck"
+      script: luarocks install --local luacheck
+    - stage: "Run Luacheck"
+      script: /home/travis/.luarocks/bin/luacheck . --no-color -q
     - stage: "Push Localizations"
-    if: |
-      branch = master AND \
-      type NOT pull_request
-    script: ./wowace_translations.sh
+      if: |
+        branch = master AND \
+        type NOT pull_request
+      script: ./wowace_translations.sh
     - stage: "Generate Changelog"
-    script: ./generate_changelog.sh
+      script: ./generate_changelog.sh
     - stage: "Update Build Date"
-    script: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
+      script: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
     - stage: "Deploy"
-    script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+      script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
 after_failure:
   - curl -s https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh | bash -s -- failure $WEBHOOK_URL
