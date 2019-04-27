@@ -10,21 +10,21 @@ git:
 
 jobs:
   include:
-    - stage: "Install Luacheck"
+    - stage: "WeakAuras Build System"
       script: luarocks install --local luacheck
-    - stage: "Run Luacheck"
-      script: /home/travis/.luarocks/bin/luacheck . --no-color -q
-    - stage: "Push Localizations"
-      if: |
+    - script: /home/travis/.luarocks/bin/luacheck . --no-color -q
+      name: "Run Luacheck"
+    - if: |
         branch = master AND \
         type NOT IN (pull_request)
       script: ./wowace_translations.sh
-    - stage: "Generate Changelog"
-      script: ./generate_changelog.sh
-    - stage: "Update Build Date"
-      script: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
-    - stage: "Deploy"
-      script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+      name: "Push Localizations"
+    - script: ./generate_changelog.sh
+      name: "Generate Changelog"
+    - script: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
+      name: "Update Build Date"
+    - script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+      name: "Deploy"
 
 after_failure:
   - curl -s https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh | bash -s -- failure $WEBHOOK_URL
