@@ -18,7 +18,6 @@ jobs:
         sudo apt-get install luarocks
         luarocks install --local luacheck
         /home/runner/.luarocks/bin/luacheck . --no-color -q
-
     - name: Update WowAce Translations
       run: ./wowace_translations.sh
 
