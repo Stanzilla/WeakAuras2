@@ -14,3 +14,13 @@ jobs:
         sudo apt-get install luarocks
         luarocks install --local luacheck
         /home/runner/.luarocks/bin/luacheck . --no-color -q   
+    - name: Update WowAce Translations
+      run: ./wowace_translations.sh
+    - name: Generate Changelog
+      run: ./generate_changelog.sh
+    - name: Update Build Date
+      run: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
+    - name: Create Retail Package
+      run: echo blah
+    - name: Create Classic Package
+      run: echo blah
