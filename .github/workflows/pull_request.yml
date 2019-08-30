@@ -25,11 +25,11 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.GITHUB_OAUTH }}
         WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
 
+    - name: Upload Retail Artifact
     - uses: actions/upload-artifact@master
       with:
         name: Release Build
         path: .release/
-    - name: Upload Retail Artifact
 
     - name: Create Classic Package
       run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -z -g 1.13.2 -m .pkgmeta-classic -w 24944;
@@ -38,8 +38,8 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.GITHUB_OAUTH }}
         WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
 
+    - name: Upload Classic Artifact
     - uses: actions/upload-artifact@master
       with:
         name: Classic Build
         path: .release/
-    - name: Upload Classic Artifact
