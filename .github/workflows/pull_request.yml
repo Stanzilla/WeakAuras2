@@ -25,6 +25,6 @@ jobs:
 
     - uses: actions/upload-artifact@master
       with:
-        name: my-artifact
-        path: path/to/artifact
+        name: Builds
+        path: .release/
 
