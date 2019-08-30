@@ -1,19 +1,24 @@
 name: Lua CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v1
-    - name: Installs and runs luacheck
+    - name: Installs and runs Luacheck
       run: |
         sudo apt-get install luarocks
         luarocks install --local luacheck
-        /home/runner/.luarocks/bin/luacheck . --no-color -q   
+        /home/runner/.luarocks/bin/luacheck . --no-color -q
     - name: Update WowAce Translations
       run: ./wowace_translations.sh
     - name: Generate Changelog
