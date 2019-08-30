@@ -1,11 +1,6 @@
 name: Lua CI
 
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
+on: [pull_request]
 
 jobs:
   build:
@@ -13,17 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install and run Luacheck
+    - name: Installs and runs Luacheck
       run: |
         sudo apt-get install luarocks
         luarocks install --local luacheck
         /home/runner/.luarocks/bin/luacheck . --no-color -q
-
-    - name: Update WowAce Translations
-      run: ./wowace_translations.sh
-
-    - name: Generate Changelog
-      run: ./generate_changelog.sh
 
     - name: Update Build Date
       run: sed -i "s/@build-time@/`date +%Y%m%d%H%M%S`/" WeakAuras/Init.lua
@@ -33,3 +22,9 @@ jobs:
 
     - name: Create Classic Package
       run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -g 1.13.2 -m .pkgmeta-classic -w 24944;
+
+    - uses: actions/upload-artifact@master
+      with:
+        name: my-artifact
+        path: path/to/artifact
+
