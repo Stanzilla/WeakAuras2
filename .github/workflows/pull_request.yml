@@ -9,7 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/upload-artifact@master
     - name: Installs and runs Luacheck
       run: |
         sudo apt-get install luarocks
@@ -25,8 +24,12 @@ jobs:
         CF_API_KEY: ${{ secrets.CF_API_KEY }}
         GITHUB_OAUTH: ${{ secrets.GITHUB_OAUTH }}
         WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+
+    - uses: actions/upload-artifact@master
+      with:
         name: Release Build
         path: .release/
+    - name: Upload Retail Artifact
 
     - name: Create Classic Package
       run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -z -g 1.13.2 -m .pkgmeta-classic -w 24944;
@@ -34,5 +37,9 @@ jobs:
         CF_API_KEY: ${{ secrets.CF_API_KEY }}
         GITHUB_OAUTH: ${{ secrets.GITHUB_OAUTH }}
         WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+
+    - uses: actions/upload-artifact@master
+      with:
         name: Classic Build
         path: .release/
+    - name: Upload Classic Artifact
