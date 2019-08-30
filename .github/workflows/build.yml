@@ -19,7 +19,9 @@ jobs:
         luarocks install --local luacheck
         /home/runner/.luarocks/bin/luacheck . --no-color -q
     - name: Update WowAce Translations
-      run: ls && ./wowace_translations.sh
+      run: |
+        ls
+        ./wowace_translations.sh
 
     - name: Generate Changelog
       run: ./generate_changelog.sh
