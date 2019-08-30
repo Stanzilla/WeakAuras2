@@ -1,4 +1,4 @@
-name: CI
+name: Lua CI
 
 on: [push]
 
@@ -13,4 +13,4 @@ jobs:
       run: |
         sudo apt-get install luarocks
         luarocks install --local luacheck
-        luacheck . --no-color -q   
+        /home/runner/.luarocks/luacheck . --no-color -q   
