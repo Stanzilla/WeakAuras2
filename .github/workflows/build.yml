@@ -13,4 +13,4 @@ jobs:
       run: |
         sudo apt-get install luarocks
         luarocks install --local luacheck
-        /home/runner/.luarocks/luacheck . --no-color -q   
+        /home/runner/.luarocks/bin/luacheck . --no-color -q   
