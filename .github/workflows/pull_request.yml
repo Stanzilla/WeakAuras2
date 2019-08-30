@@ -27,7 +27,7 @@ jobs:
 
     - uses: actions/upload-artifact@master
       with:
-        name: WeakAuras-${{ github.ref }}-Retail Build
+        name: WeakAuras-${{ github.base_ref }}
         path: .release/
 
     - name: Create Classic Package
@@ -39,5 +39,5 @@ jobs:
 
     - uses: actions/upload-artifact@master
       with:
-        name: WeakAuras-${{ github.ref }}-Classic Build
+        name: WeakAuras-${{ github.base_ref }}-classic
         path: .release/
