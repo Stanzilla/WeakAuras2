@@ -29,7 +29,6 @@ jobs:
       with:
         name: WeakAuras-PR-${{ github.head_ref }}
         path: .release/
-
     - name: Create Classic Package
       run: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -z -g 1.13.2 -m .pkgmeta-classic -w 24944;
       env:
