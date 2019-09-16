@@ -42,8 +42,8 @@ jobs:
         name: WeakAuras-PR-${{ github.head_ref }}-classic
         path: .release/
 
-    #- name: Notify on Failure
-    #  if: failure()
-    #  run: curl -s https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh | bash -s -- failure $WEBHOOK_URL;
-    #  env:
-    #    WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+    - name: Notify on Failure
+      if: failure()
+      run: curl -s https://gist.githubusercontent.com/nebularg/d76b43032331bff1b8bb60767e699a32/raw/196c10db7fdff4104d8247d6b3c911693bf856ca/send.sh | bash -s -- failure $WEBHOOK_URL;
+      env:
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
